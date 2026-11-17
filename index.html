@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101322"><meta name="description" content="Brain Racers TOEIC: carrera de vocabulario multijugador en tiempo real.">
+  <title>Brain Racers — TOEIC Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=3">
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <main class="shell">
+    <header class="topbar"><a class="brand" href="/"><span class="brand-mark">BR</span><span>BRAIN <b>RACERS</b><small>TOEIC EDITION</small></span></a><div class="live-pill"><i></i> MULTIPLAYER ONLINE</div></header>
+    <section id="homeScreen" class="screen hero-screen">
+      <div class="hero-copy"><div class="eyebrow">⚡ LEARN FAST. RACE SMART.</div><h1>EL VOCABULARIO<br><em>ES TU MOTOR.</em></h1><p class="lead">Compite en tiempo real, domina el vocabulario TOEIC y llega primero a la meta.</p>
+        <div class="feature-row"><span>🏁 4 corredores</span><span>⏱ 5–7 minutos</span><span>🌐 Online real</span><span>🃏 Study mode</span></div><div class="home-extra"><button id="studyHomeBtn" class="btn btn-secondary">🃏 STUDY MODE / FLASHCARDS</button><p>Repasa las palabras antes de competir.</p></div></div>
+      <div class="race-art" aria-hidden="true"><div class="sun"></div><div class="track"><div class="track-line"></div><div class="mini-car car-one">🚙</div><div class="mini-car car-two">🏎️</div><div class="mini-car car-three">🚗</div></div><div class="flag">FINISH</div></div>
+      <div class="join-panel"><div class="panel-heading"><div><span class="step">01 / IDENTIFÍCATE</span><h2>¿Quién va a correr?</h2></div><span class="avatar-preview" id="avatarPreview">🚀</span></div>
+        <label for="playerName">TU APODO</label><input id="playerName" maxlength="18" placeholder="Ej. Word Ninja" autocomplete="nickname">
+        <div class="avatar-picker"><button class="avatar-choice selected" data-avatar="🚀" aria-label="Cohete">🚀</button><button class="avatar-choice" data-avatar="🦊" aria-label="Zorro">🦊</button><button class="avatar-choice" data-avatar="🐼" aria-label="Panda">🐼</button><button class="avatar-choice" data-avatar="🐸" aria-label="Rana">🐸</button></div>
+        <div class="join-actions"><button id="createBtn" class="btn btn-primary">CREAR SALA <span>↗</span></button><div class="join-divider"><span>O ÚNETE A UNA</span></div><div class="join-inline"><input id="roomCodeInput" maxlength="5" inputmode="numeric" placeholder="CÓDIGO" aria-label="Código de sala"><button id="joinBtn" class="btn btn-secondary">UNIRME</button></div></div>
+        <p class="fine-print">Una persona crea la sala y comparte el código con hasta 3 corredores más.</p>
+      </div>
+    </section>
+
+    <section id="lobbyScreen" class="screen hidden">
+      <div class="section-head"><div><span class="step">02 / PARRILLA DE SALIDA</span><h1>PREPARA TU <em>EQUIPO.</em></h1><p>Comparte el código. Cuando haya al menos 2 jugadores, el anfitrión puede iniciar.</p></div><div class="room-code-card"><small>CÓDIGO DE SALA</small><strong id="roomCode">-----</strong><button id="copyCodeBtn" class="copy-btn">COPIAR ↗</button></div>
+        <div class="lobby-header-actions">
+          <button id="lobbyStudyBtn" class="btn btn-secondary">🃏 STUDY MODE</button>
+          <button id="leaveLobbyBtn" class="btn btn-danger leave-btn">SALIR DE LA SALA ✕</button>
+        </div></div>
+      <div class="lobby-layout"><div class="players-panel"><div class="panel-title"><h2>Corredores</h2><span id="playerCount" class="count-pill">0 / 4</span></div><div id="lobbyPlayers" class="lobby-player-list"></div><div class="waiting-note" id="waitingNote">⌛ Esperando a más corredores...</div></div>
+        <aside class="rules-card"><div class="rules-icon">🏆</div><span class="step">CÓMO GANAR</span><h2>10 rondas.<br>Una sola meta.</h2><ul><li>Lee la pista y elige la respuesta.</li><li>Responde rápido para ganar bonus.</li><li>Cada acierto suma puntos y avance.</li></ul><div class="rules-meta"><span>⏱ 18 segundos por ronda</span><span>🎯 +100 puntos por acierto</span></div><button id="startBtn" class="btn btn-primary btn-wide" disabled>INICIAR CARRERA <span>→</span></button><p id="hostHint" class="host-hint">Solo el anfitrión puede iniciar.</p></aside>
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen hidden">
+      <div class="game-top"><div><span class="step">BRAIN RACERS / EN VIVO</span><h1>¡A TODA <em>VELOCIDAD!</em></h1></div><div class="game-head-actions"><div class="round-badge">RONDA <b id="roundNumber">01</b><span>/ 10</span></div><button id="leaveGameBtn" class="btn btn-danger">SALIR ✕</button></div></div>
+      <div class="race-board"><div class="finish-label">META 🏁</div><div id="raceLanes" class="race-lanes"></div></div>
+      <div class="question-layout"><div class="question-card"><div class="question-meta"><span id="questionType" class="type-tag">VOCABULARIO</span><span class="timer-wrap">⏱ <b id="timerText">18</b>s</span></div><div class="timer-bar"><div id="timerBar"></div></div><h2 id="questionPrompt">Loading...</h2><div id="answerGrid" class="answer-grid"></div><div id="answerStatus" class="answer-status" aria-live="polite">Elige tu respuesta antes de que termine el tiempo.</div></div>
+        <aside class="score-card"><div class="panel-title"><h2>Clasificación</h2><span class="live-tag"><i></i> LIVE</span></div><div id="scoreList" class="score-list"></div><div class="score-tip">💡 <b>Tip:</b> cada segundo cuenta. ¡La rapidez también suma!</div></aside></div>
+      <div id="revealBanner" class="reveal-banner hidden"><span class="reveal-icon">✨</span><div><small>RESPUESTA CORRECTA</small><strong id="revealAnswer"></strong><p id="revealDetail"></p></div></div>
+    </section>
+
+
+    <section id="studyScreen" class="screen hidden">
+      <div class="section-head"><div><span class="step">STUDY MODE / TOEIC WORD BANK</span><h1>REPASA Y <em>APRENDE.</em></h1><p>Voltea las tarjetas para ver la definición, traducción y pronunciación. Usa «Lo sé» o «Repasar» para organizar tu estudio.</p></div><div class="study-header-actions">
+          <button id="exitStudyBtn" class="btn btn-secondary">VOLVER</button>
+          <button id="leaveStudyRoomBtn" class="btn btn-danger hidden">SALIR DE LA SALA ✕</button>
+        </div></div>
+      <div class="study-toolbar"><div><span class="study-count" id="studyCounter">1 / 170</span><span class="study-progress"><i id="studyProgress"></i></span></div><div class="study-filters"><button class="study-filter active" data-filter="all">Todas</button><button class="study-filter" data-filter="review">Por repasar</button><button class="study-filter" data-filter="known">Dominadas</button></div></div>
+      <div class="flashcard-scene"><button id="flashcard" class="flashcard" aria-label="Voltear tarjeta"><span class="flashcard-face flashcard-front"><small>TOEIC VOCABULARY</small><strong id="flashWord">abide by</strong><span id="flashPron">a-BÁID bai</span><em>Toca la tarjeta para revelar</em></span><span class="flashcard-face flashcard-back"><small>DEFINITION</small><strong id="flashDefinition"></strong><b id="flashSpanish"></b><span id="flashBackPron"></span></span></button></div>
+      <div class="study-actions"><button id="prevCardBtn" class="btn btn-secondary">← ANTERIOR</button><button id="reviewCardBtn" class="btn btn-danger">↻ REPASAR</button><button id="knownCardBtn" class="btn btn-primary">✓ LO SÉ</button><button id="nextCardBtn" class="btn btn-secondary">SIGUIENTE →</button></div>
+      <p class="study-note" id="studyNote">Consejo: intenta recordar el significado antes de voltear la tarjeta.</p>
+    </section>
+
+    <section id="resultScreen" class="screen hidden">
+      <div class="result-hero"><div class="trophy-big">🏆</div><span class="step">CARRERA COMPLETADA</span><h1 id="winnerTitle">¡TENEMOS GANADOR!</h1><p id="winnerSubtitle">Gran carrera. El vocabulario te llevó a la meta.</p></div>
+      <div class="podium" id="finalRanking"></div><div class="result-actions"><button id="restartBtn" class="btn btn-primary">REVANCHA ↻</button><button id="backHomeBtn" class="btn btn-secondary">SALIR</button></div>
+    </section>
+    <footer><span>© BRAIN RACERS · TOEIC WORD BANK</span><span>HECHO PARA APRENDER JUGANDO <b>✦</b></span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/socket.io/socket.io.js"></script><script src="/app.js?v=3"></script>
+</body></html>
